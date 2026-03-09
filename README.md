@@ -14,19 +14,6 @@ This chatbot allows users to ask questions about CARA(Center for Alumni Relation
 - Persistent vector database for repeated queries
 
 ---
-
-## Folder Structure
-Faq-Bot/
-│
-├── app.py # Streamlit chatbot interface
-├── ingest.py # Script to ingest documents and create vector embeddings
-├── requirements.txt # Project dependencies
-├── docs/ # Sample PDF/TXT files for testing
-├── db/ # Generated vector database
-├── images/ # Screenshots or demo GIFs
-├── myenv/ # Local virtual environment (ignored in git)
-├── README.md # Project documentation
-└── .gitignore
 ## Installation
 
 ## Clone the repository
