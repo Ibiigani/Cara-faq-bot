@@ -37,13 +37,13 @@ Step 1 – Ingest document
 
 python ingest.py
 
-This will create vector embeddings tha is saved in db/.
+This will create vector embeddings that is saved in db.
 
 Step 2 – Run the chatbot
-streamlit run app.py
+streamlit run chatbot.py
 
 Open the Streamlit link in your browser.
-Ask questions about your CARA
+Ask a question about CARA
 
 
 
