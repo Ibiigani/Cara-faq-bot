@@ -4,21 +4,16 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFacePipeline
 from transformers import pipeline
 
-# ----------------------------
-# Page Config
-# ----------------------------
+
+# page configuration
 st.set_page_config(page_title="CARA FAQ Bot")
 st.title("CARA FAQ Assistant")
 
-# ----------------------------
-# Chat History
-# ----------------------------
+# chat history
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# ----------------------------
-# Load Embeddings (LOCAL)
-# ----------------------------
+# load mmbeddings (LOCAL)
 @st.cache_resource
 def load_embeddings():
     return HuggingFaceEmbeddings(
@@ -27,9 +22,7 @@ def load_embeddings():
 
 embeddings = load_embeddings()
 
-# ----------------------------
-# Load Vector DB
-# ----------------------------
+# load vector DB
 @st.cache_resource
 def load_vectordb():
     return Chroma(
@@ -39,21 +32,17 @@ def load_vectordb():
 
 vectordb = load_vectordb()
 
-# ----------------------------
-# Retriever (most relevant chunks only)
-# ----------------------------
+# setup vector db as retriever to retrieve most relevant chunks 
 retriever = vectordb.as_retriever(
     search_type="mmr",
     search_kwargs={"k": 1, "fetch_k": 5}  # only top chunk
 )
 
-# ----------------------------
-# Load Local LLM (Transformers 5.3 compatible)
-# ----------------------------
+# load llm
 @st.cache_resource
 def load_llm():
     pipe = pipeline(
-        "text-generation",  # v5 replacement for text2text-generation
+        "text-generation",  
         model="google/flan-t5-base",
         max_new_tokens=120,
         temperature=0.2
@@ -62,21 +51,15 @@ def load_llm():
 
 llm = load_llm()
 
-# ----------------------------
-# Display Chat History
-# ----------------------------
+# display chat history
 for role, message in st.session_state.history:
     with st.chat_message(role):
         st.write(message)
 
-# ----------------------------
-# User Input
-# ----------------------------
+# user Input
 query = st.chat_input("Ask a question about CARA")
 
-# ----------------------------
-# RAG Pipeline
-# ----------------------------
+# rag pipeline
 if query:
 
     st.session_state.history.append(("user", query))
